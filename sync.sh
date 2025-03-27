@@ -1,0 +1,1 @@
+rsync -rvz -e 'ssh -p 3822' --progress /mnt/c/Users/Naray/OneDrive/Documents/lenovo-api/app/ thedigitalapps@thedigitalapps.com:/home/thedigitalapps/public_html/lenovo/api/app

@@ -1,0 +1,9 @@
+vendor/
+csv/
+.DS_Store
+/.DS_Store
+/.vscode
+
+# git remote add origin git@github.com:octechdigital/mega-break-api.git
+# git branch -M main
+# git push -u origin main
