@@ -12,8 +12,42 @@ use App\Models\Winner;
 
 class DashboardController extends DashboardHelperController
 {
-    private function totalAppVisitsCount($req, $res){
-        $key = $req->getAttribute("key");
-        return $res->withJson($key);
+    public function totalAppVisitsCount($req, $res, $args)
+    {
+
+
+        // $key = $req->getAttribute("key");
+        // $data = $req->getParsedBody("data");
+        // $key = $req->getQueryParam("key");
+        $output = ["status" => 400];
+
+        $key = Activation::htmlEncode($this->getData($args, 'key'));
+        if ($key == $this->chartKey) {
+
+            $startDate = $this->StartDate($req);
+            $endingDate = $this->EndingDate($req);
+
+            $total = $this->getTotalAppVisits($startDate, $endingDate);
+            $count = 0;
+
+            foreach ($total as $t) {
+                $count += 1;
+            }
+            $output = [
+                "status" => 200,
+                "chartType" => "i-count",
+                "datasets" => [
+                    [
+                        "icon" => "users",
+                        "title" => 'Total app visits',
+                        "value" => number_format($count),
+                    ]
+                ]
+            ];
+
+
+
+        }
+        return json_encode($output);
     }
 }

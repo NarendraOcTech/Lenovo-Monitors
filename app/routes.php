@@ -16,5 +16,4 @@ $app->group('/users', function () {
 
 $app->group('/analytics', function () {
     $this->get('/totalAppVisitsCount[/{key}]', 'DashboardController:totalAppVisitsCount');
-    
 });

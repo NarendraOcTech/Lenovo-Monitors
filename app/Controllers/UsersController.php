@@ -47,7 +47,7 @@ class UsersController extends UsersHelperController
         $input = $this->getUserInput($req);
         $output = $this->validateRegister($input);
 
-        
+
 
 
         if (empty($output)) {
@@ -91,14 +91,13 @@ class UsersController extends UsersHelperController
                 $rewardType = $this->getAndSendReward($save['id'], $code);
                 $output["reward"] = $rewardType;
                 // $output["reward"] = $reward;
-                
+
             } catch (QueryException $e) {
-                $output= Validation::$codeAlreadyAdded;
+                $output = Validation::$codeAlreadyAdded;
                 $output["message"] = $e;
             }
-            
+
         }
         return Hash::encodeOutput($res, $output);
-
     }
 }
