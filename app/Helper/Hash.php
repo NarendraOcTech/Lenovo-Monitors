@@ -28,4 +28,34 @@ class Hash
         );
         return bin2hex($dataBin) . '.' . bin2hex($dataTag);
     }
+
+
+    public static function decryptData($data)
+    {
+        $valid = false;
+        $dataBin = '';
+        $dataTag = '';
+
+        if (!empty($data)) {
+            $dataPart = explode('.', $data);
+            if (count($dataPart) == 2) {
+                [$dataBin, $dataTag] = $dataPart;
+                $valid = true;
+            }
+        }
+
+
+
+        if (!$valid || empty($dataBin) || empty($dataTag)) {
+            return '';
+        }
+        return openssl_decrypt(
+            hex2bin($dataBin),
+            self::$algo,
+            hex2bin(self::$dataKey),
+            OPENSSL_RAW_DATA,
+            User::getDataIv(),
+            hex2bin($dataTag)
+        );
+    }
 }

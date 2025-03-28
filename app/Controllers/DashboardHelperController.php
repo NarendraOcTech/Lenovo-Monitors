@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 class DashboardHelperController extends Controller
 {
     protected $chartKey = "QPLnvDm20SH1EP8Wy3TmeMUGEDIDjc";
+    protected $reportKey = "Qu92xqr93q90oCVXFtDOLsJuDPFKsD";
     protected $dashboardStartDate = '2025-03-25';
     protected $dashboardEndtDate = '2025-10-27';
 

@@ -403,8 +403,9 @@ class DashboardController extends DashboardHelperController
         return json_encode($output);
     }
 
-    public function timeWiseTraffic($req, $res, $args){
-        
+    public function timeWiseTraffic($req, $res, $args)
+    {
+
         $output = ["status" => 400];
         $key = Activation::htmlEncode($args['key']);
         if ($key == $this->chartKey) {
@@ -432,6 +433,131 @@ class DashboardController extends DashboardHelperController
                     "title" => 'Time wise traffic',
                     "xLabelString" => 'Time',
                     "yLabelString" => 'Number of users'
+                ]
+            ];
+        }
+        return json_encode($output);
+    }
+
+    public function userData($req, $res, $args)
+    {
+        $output = ["status" => 400];
+
+        $key = Activation::htmlEncode($args['key']);
+        if ($key == $this->reportKey) {
+            $startDateReq = $req->getQueryParam('startDate');
+            $endDateReq = $req->getQueryParam('endDate');
+            if (empty($startDateReq) || empty($endDateReq)) {
+                $startDate = date('Y-m-d', strtotime('-2 days'));
+                $endDate = date('Y-m-d');
+            } else {
+                $startDate = $this->StartDate($req);
+                $endDate = $this->EndingDate($req);
+            }
+            $data = User::select(
+                'name',
+                'company_name',
+                'mobile',
+                'code',
+                'city',
+                'rd_name',
+                'email',
+                'reward_code',
+                'reward_type',
+                'created_at'
+            )
+                ->orderBy('created_at', 'DESC')
+                ->where('created_date', "<=", $endDate)
+                ->where('created_date', ">=", $startDate)
+                // ->where("verified", 1)
+                ->get();
+
+
+            foreach ($data as $d) {
+                $final[] = [
+                    Hash::decryptData($d->name),
+                    $d->company_name,
+                    Hash::decryptData($d->mobile),
+                    $d->code,
+                    $d->city,
+                    $d->rd_name,
+                    Hash::decryptData($d->email),
+                    $d->reward_code,
+                    $d->reward_type,
+                    date('Y-m-d H:i:s', strtotime($d->created_at))
+                ];
+            }
+            ;
+
+            
+            $dataHeader = [
+                [
+                    "title" => 'Name',
+                    "dataIndex" => 0,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'Company Name',
+                    "dataIndex" => 1,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'Mobile',
+                    "dataIndex" => 2,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'Code',
+                    "dataIndex" => 3,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'City',
+                    "dataIndex" => 4,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'RD Name',
+                    "dataIndex" => 5,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'email',
+                    "dataIndex" => 6,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'Reward Code',
+                    "dataIndex" => 7,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'Reward_type',
+                    "dataIndex" => 8,
+                    "type" => "text"
+                ],
+                [
+                    "title" => 'Registered At',
+                    "dataIndex" => 9,
+                    "type" => "text"
+                ],
+            ];
+            $output = [
+                "status" => 200,
+                "data" => [
+                    'filters' => [
+                        [
+                            "type" => "DATE-RANGE",
+                            "param" => "startDate,endDate",
+                            "endDate" => "2024-11-18"
+                        ],
+
+                    ],
+                    'dataHeader' => $dataHeader,
+                    "data" => $final,
+                    "pageCount" => 1,
+                    "totalRows" => count($final),
+
                 ]
             ];
         }

@@ -32,4 +32,6 @@ $app->group('/analytics', function () {
     $this->get('/osDistribution[/{key}]', 'DashboardController:osDistribution');
     $this->get('/dayWiseTraffic[/{key}]', 'DashboardController:dayWiseTraffic');
     $this->get('/timeWiseTraffic[/{key}]', 'DashboardController:timeWiseTraffic');
+
+    $this->get('/userData[/{key}]', 'DashboardController:userData');
 });

@@ -72,7 +72,7 @@ class UsersController extends UsersHelperController
             $mobileEnc = Hash::encryptData($mobile);
             $savedData = [
                 "company_name" => $companyName,
-                "mobile" => $name,
+                "mobile" => Hash::encryptData($mobile),
                 "code" => $code,
                 "city" => $city,
                 "name" => Hash::encryptData($name),
