@@ -16,4 +16,7 @@ $app->group('/users', function () {
 
 $app->group('/analytics', function () {
     $this->get('/totalAppVisitsCount[/{key}]', 'DashboardController:totalAppVisitsCount');
+    $this->get('/uniqueVisitsCount[/{key}]', 'DashboardController:uniqueVisitsCount');
+    $this->get('/appRevisitsCount[/{key}]', 'DashboardController:appRevisitsCount');
+    $this->get('/deviceDistributionCount[/{key}]', 'DashboardController:deviceDistributionCount');
 });

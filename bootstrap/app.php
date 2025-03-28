@@ -18,6 +18,9 @@ $app = new \Slim\App([
     ]
 ]);
 
+
+
+
 $container = $app->getContainer();
 
 $capsule = new \Illuminate\Database\Capsule\Manager;
@@ -33,11 +36,11 @@ $container['notFoundHandler'] = function ($c) {
 
 date_default_timezone_set("Asia/Kolkata");
 
-// $container['WOOHOO_BASE_URL'] = 'https://sandbox.woohoo.in';
-// $container['WOOHOO_USERNAME'] = 'vouchagramapisandbox@woohoo.in';
-// $container['WOOHOO_PASSWORD'] = 'vouchagramapisandbox@1234';
-// $container['WOOHOO_CLIENT_ID'] = '8af50260ae5444bdc34665c2b6e6daa9';
-// $container['WOOHOO_CLIENT_SECRET'] = '93c1d8f362749dd1fe0a819ae8b5de95';
+$container['WOOHOO_BASE_URL'] = 'https://sandbox.woohoo.in';
+$container['WOOHOO_USERNAME'] = 'vouchagramapisandbox@woohoo.in';
+$container['WOOHOO_PASSWORD'] = 'vouchagramapisandbox@1234';
+$container['WOOHOO_CLIENT_ID'] = '8af50260ae5444bdc34665c2b6e6daa9';
+$container['WOOHOO_CLIENT_SECRET'] = '93c1d8f362749dd1fe0a819ae8b5de95';
 
 $container['db'] = function ($container) use ($capsule) {
     return $capsule;
@@ -54,3 +57,15 @@ $container["DashboardController"] = function ($container) {
 };
 
 require __DIR__ . './../app/routes.php';
+
+
+
+// 'driver' => "mysql",
+// 'host' => "localhost",
+// 'database' => "octechdigital",
+// 'username' => "root",
+// 'password' => '',
+// 'charset' => 'utf8',
+// 'collation' => 'utf8_unicode_ci',
+// 'prefix' => 'sample_lenovo_monitors_',
+?>
