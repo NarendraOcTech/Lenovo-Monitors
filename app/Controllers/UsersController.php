@@ -76,7 +76,7 @@ class UsersController extends UsersHelperController
                 "code" => $code,
                 "city" => $city,
                 "name" => Hash::encryptData($name),
-                "created_at" => date("Y-m-d"),
+                "created_date" => date("Y-m-d"),
                 "email" => Hash::encryptData($email),
                 "rd_name" => $RDName
             ];
